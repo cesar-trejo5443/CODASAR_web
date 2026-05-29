@@ -4,7 +4,7 @@
     <!-- Definición del juego de caracteres universal para admitir acentos y eñes -->
     <meta charset="UTF-8">
     <!-- Configuración para que el sitio sea responsivo y se adapte al ancho de cualquier dispositivo móvil -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FeastCatering | Banquetes y Sabores Exquisitos</title>
     
     <!-- Fuentes de Google: Playfair Display para títulos elegantes y Poppins para lectura cómoda -->
@@ -12,15 +12,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Biblioteca externa FontAwesome para renderizar los iconos del menú, teléfonos, etc. -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Biblioteca externa FontAwesome v6.5.1 (Versión actualizada que incluye soporte nativo para el icono de cazuela) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         /* HOJA DE ESTILOS (CSS) */
 
         /* Variables globales (:root): Facilitan cambiar colores, sombras o bordes en todo el sitio desde un solo lugar */
         :root {
-            --primary: #d35400;          /* Color primario: Naranja cálido que estimula el apetito */
+            --primary: #d35400;          /* Color primario: Naranja cálido que de el apetito */
             --primary-hover: #e67e22;    /* Tono para efectos hover (al pasar el cursor sobre elementos naranja) */
             --secondary: #2c3e50;        /* Color secundario: Azul marino/oscuro elegante para textos y fondos serios */
             --accent: #f1c40f;           /* Color de acento: Amarillo brillante para elementos destacados */
@@ -40,6 +40,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box; /* Fuerza a que los márgenes internos no sumen tamaño al ancho total de las cajas */
+        }
+
+        /* Bloqueo estricto de desbordamiento horizontal en todo el documento para evitar zoom involuntario en móviles */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
             scroll-behavior: smooth; /* Hace que el desplazamiento por los enlaces internos sea suave y deslizado */
         }
 
@@ -88,6 +94,8 @@
             display: flex;
             align-items: center;
             gap: 10px;                  /* Espaciado de 10px entre el icono de cubiertos y el texto */
+            color: var(--secondary);
+            font-weight: bold;
         }
 
         .logo i {
@@ -97,6 +105,7 @@
         .logo span {
             color: var(--primary);      /* La sección "Catering" se destaca en color naranja */
             font-style: italic;         /* Estilo en cursiva para un toque de diseño */
+            font-weight: normal;
         }
 
         /* Menú de enlaces */
@@ -273,8 +282,8 @@
         /* Cuadrícula o Grid del catálogo de banquetes */
         .catalog-grid {
             display: grid;
-            /* Crea columnas automáticas adaptables que miden mínimo 350px y se estiran equitativamente */
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            /* Columnas inteligentes: mínimo 280px para evitar el desbordamiento en celulares pequeños */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2.5rem;                /* Espacio de separación entre las tarjetas del catálogo */
         }
 
@@ -662,7 +671,7 @@
             padding: 0.8rem 1rem;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            outline: none;              /* Elimina el borde azul horrible por defecto del navegador */
+            outline: none;              /* Elimina el borde azul de enfoque del navegador */
             transition: var(--transition);
             font-size: 0.95rem;
         }
@@ -673,7 +682,7 @@
             box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.15); /* Efecto halo de luz naranja */
         }
 
-        /* Seccion Calculadora de Presupuesto Integrada */
+        /* Sección Calculadora de Presupuesto Integrada */
         .calculator-preview {
             background-color: #f8fafc;  /* Fondo gris-azul sumamente limpio */
             border: 1px solid #e2e8f0;
@@ -713,29 +722,34 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* Notificación Flotante (Toast) en reemplazo de los molestos alert() */
+        /* Notificación Flotante (Toast): Rediseñada con Opacidad y Visibilidad para que NUNCA aparezca al fondo de la pantalla por error */
         .toast {
             position: fixed;
-            bottom: -100px;             /* Inicialmente escondido por debajo del marco inferior */
+            bottom: 30px;               /* Posición final fija sobre la pantalla */
             left: 50%;
-            transform: translateX(-50%); /* Centrado horizontal exacto */
-            background-color: #2ecc71;  /* Color verde éxito */
+            transform: translate(-50%, 20px); /* Centrado horizontal y empujado levemente hacia abajo */
+            background-color: #2ecc71;  /* Color verde de éxito */
             color: white;
             padding: 1rem 2.5rem;
             border-radius: 50px;
             box-shadow: var(--shadow-lg);
-            z-index: 3000;
-            /* Transición elástica elegante al subir (cubic-bezier) */
-            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 3000;              /* Por encima de todo */
+            opacity: 0;                 /* Totalmente invisible al cargar */
+            visibility: hidden;         /* No interactuable ni scrollable cuando está apagado */
+            /* Transición suave de aparición y deslizamiento */
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 10px;
+            white-space: nowrap;        /* Evita que el texto se rompa en varias líneas en pantallas angostas */
         }
 
         /* Clase para activar y mostrar la notificación */
         .toast.show {
-            bottom: 30px;               /* Sube 30px sobre el fondo de la ventana */
+            opacity: 1;                 /* Se hace visible */
+            visibility: visible;        /* Se vuelve interactuable */
+            transform: translate(-50%, 0); /* Sube suavemente a su posición original */
         }
 
         /* Pie de Página */
@@ -799,33 +813,59 @@
             }
         }
 
-        /* Ajustes para dispositivos móviles (Menor a 768px) */
+        /* Ajustes de optimización para dispositivos móviles (Menor a 768px) */
         @media (max-width: 768px) {
+            /* Reduce la separación excesiva en móviles para compactar la lectura */
+            .section-container, .contact-grid-container {
+                padding: 3rem 1.2rem;
+            }
+            
             .nav-toggle {
                 display: block;         /* Hace visible el icono hamburguesa */
             }
+            
+            /* Optimización del menú lateral para evitar desbordamiento y zooms erróneos */
             .nav-links {
-                position: fixed;        /* Posiciona el menú fuera de pantalla para animación */
+                position: fixed;        
                 top: 60px;
-                left: -100%;            /* Oculto totalmente a la izquierda */
+                left: 0;                /* Se posiciona al borde izquierdo */
                 width: 100%;
-                height: calc(100vh - 60px); /* Ocupa el resto de la pantalla del celular */
+                height: calc(100vh - 60px); 
                 background-color: white;
                 flex-direction: column; /* Alinea los enlaces uno debajo de otro */
                 padding: 3rem 1rem;
-                transition: var(--transition);
+                /* Ocultado mediante transformación de hardware, previniendo scroll horizontal accidental */
+                transform: translateX(-100%);
+                transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
                 box-shadow: var(--shadow-md);
             }
+            
             /* Despliega el menú lateral al estar activo */
             .nav-links.active {
-                left: 0;                /* Se posiciona al borde de la pantalla */
+                transform: translateX(0); /* Se desliza a su posición visible */
             }
+            
+            /* Asegura que las tarjetas ocupen el ancho completo del celular sin desbordar */
+            .catalog-grid {
+                grid-template-columns: 1fr; 
+                gap: 2rem;
+            }
+            
             .form-row {
                 grid-template-columns: 1fr; /* Colapsa la cuadrícula de inputs a un solo elemento por fila */
                 gap: 0;
             }
+            
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .form-card {
+                padding: 1.8rem;        /* Reduce el margen interno del formulario en pantallas pequeñas */
             }
         }
     </style>
@@ -835,10 +875,10 @@
     <!-- CABECERA: Contiene la marca y el menú de navegación superior -->
     <header>
         <nav class="navbar">
-            <!-- Marca/Logo de la empresa de banquetes -->
+            <!-- Marca/Logo de la empresa de banquetes con el icono de Cazuela/Olla caliente funcionando -->
             <a href="#" class="logo">
-                <i class="fa-solid fa-utensils"></i> <!-- Icono de tenedor y cuchillo -->
-                Feast<span>Catering</span>
+                <i class="fa-solid fa-kitchen-set"></i> <!-- Icono de cazuela con vapor caliente -->
+                CODASAR
             </a>
             
             <!-- Lista de navegación (Menú) con llamadas a funciones de cierre automático en móviles -->
@@ -1106,7 +1146,7 @@
                         <div class="calc-total" id="estimatedTotal">$14,000</div>
                     </div>
 
-                    <!-- Botón de envío que procesa el formulario mediante Formspree -->
+                    <!-- Botón de envío que simula el guardado de datos -->
                     <button type="submit" class="btn-submit">Enviar Solicitud de Reserva</button>
                 </form>
             </div>
@@ -1345,20 +1385,20 @@
             }).format(total);
         }
 
-        // MANEJADOR DEL FORMULARIO Y TOAST PERSONALIZADO
+        // MANEJADOR DEL ENVÍO DE FORMULARIO CON CONEXIÓN PROFESIONAL A FORMSPREE
         function handleFormSubmit(e) {
-            e.preventDefault(); // Evita que la página se recargue por defecto
+            e.preventDefault(); // Detiene el comportamiento por defecto de recargar la página completa al enviar
             
-            // 1. Obtener las variables del formulario escritas por el cliente
+            // CONFIGURACIÓN DE FORMSPREE:
+            const formspreeID = "mwvzzogo"; 
+
+            // Captura los valores ingresados por el usuario
             const name = document.getElementById('guestName').value;
             const date = document.getElementById('eventDate').value;
-            const email = document.getElementById('guestEmail').value; // Correo de tu cliente
+            const email = document.getElementById('guestEmail').value;
             const guests = document.getElementById('guestCount').value;
             const menuName = document.getElementById('packageSelect').options[document.getElementById('packageSelect').selectedIndex].text;
             const total = document.getElementById('estimatedTotal').innerText;
-
-            // CONFIGURACIÓN DE FORMSPREE:
-            const formspreeID = "mwvzzogo"; 
 
             // Consola para depuración técnica
             console.log("Procesando envío...", { name, date, email, guests, menuName, total });
@@ -1367,13 +1407,21 @@
             const toast = document.getElementById('successToast');
             const toastSpan = toast.querySelector('span');
 
-            // 2. Comprobar si ya colocaste tu ID real de Formspree o si seguimos en pruebas locales
-            if (formspreeID === "TU_FORM_ID_AQUI") {
-                // MODO SIMULACIÓN (Local): Te muestra cómo lucirá, útil para pruebas antes de publicar
-                toastSpan.innerText = "¡Simulación de cotización guardada con éxito (Modo local)!";
+            // Estructuración de datos para el envío mediante API a Formspree
+            const formData = {
+                "Nombre del Cliente": name,
+                "Fecha del Evento": date,
+                "Correo de Contacto": email,
+                "Invitados": guests,
+                "Menú Elegido": menuName,
+                "Presupuesto Estimado": total
+            };
+
+            // Comportamiento dinámico según si el desarrollador configuró su ID de Formspree
+            if (formspreeID === "TU_FORM_ID_AQUI" || formspreeID === "") {
+                // MODO SIMULACIÓN (Ideal para pruebas locales sin conexión de red)
+                toastSpan.innerText = `[SIMULACIÓN] ¡Presupuesto calculado de ${total} para ${name}!`;
                 toast.classList.add('show');
-                
-                // Reiniciar campos
                 document.getElementById('quoteForm').reset();
                 calculatePrice();
 
@@ -1381,51 +1429,46 @@
                     toast.classList.remove('show');
                 }, 4500);
             } else {
-                // MODO REAL (Envío a tu Correo): Envía los datos estructurados en formato JSON a Formspree
-                toastSpan.innerText = "Enviando tu presupuesto...";
+                // MODO PRODUCCIÓN (Envío real a los servidores de Formspree)
+                toastSpan.innerText = "Enviando cotización...";
                 toast.classList.add('show');
 
+                // Petición HTTP POST asíncrona hacia Formspree
                 fetch(`https://formspree.io/f/${formspreeID}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify({
-                        "Nombre del Cliente": name,
-                        "Correo del Cliente": email,
-                        "Fecha del Evento": date,
-                        "Invitados": guests,
-                        "Menú Elegido": menuName,
-                        "Presupuesto Estimado": total
-                    })
+                    body: JSON.stringify(formData)
                 })
                 .then(response => {
                     if (response.ok) {
-                        // Si Formspree procesó el correo correctamente
-                        toastSpan.innerText = "¡Presupuesto enviado! Te contactaremos por email muy pronto.";
+                        // Respuesta exitosa del servidor
+                        toastSpan.innerText = "¡Presupuesto Guardado! Te contactaremos por email en unos minutos.";
                         document.getElementById('quoteForm').reset();
-                        calculatePrice(); // Resetea la calculadora visual
+                        calculatePrice(); // Resetea visualmente el monto de la calculadora
                     } else {
-                        // Manejo de errores del servidor
-                        toastSpan.innerText = "Hubo un detalle al enviar. Intenta de nuevo o contáctanos directamente.";
+                        // Error de configuración por parte de la API
+                        toastSpan.innerText = "Hubo un error al procesar el envío. Intenta de nuevo.";
                     }
-                })
-                .catch(error => {
-                    // Manejo de errores de conexión o internet del usuario
-                    console.error("Error en la conexión:", error);
-                    toastSpan.innerText = "Error de red. Revisa tu conexión a internet.";
-                })
-                .finally(() => {
-                    // Quita el mensaje flotante de la pantalla después de 5 segundos
+                    // Mantiene la notificación visible por 4.5 segundos y luego la apaga
                     setTimeout(() => {
                         toast.classList.remove('show');
-                    }, 5000);
+                    }, 4500);
+                })
+                .catch(error => {
+                    // Error de conexión de red (Sin internet)
+                    console.error("Error de Red:", error);
+                    toastSpan.innerText = "Error de conexión. Revisa tu internet.";
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 4500);
                 });
             }
         }
 
-        // Ejecutar cálculo inicial al cargar el documento
+        // Inicializador automático: calcula el precio de partida por defecto en cuanto la página esté lista
         window.addEventListener('DOMContentLoaded', () => {
             calculatePrice();
         });
