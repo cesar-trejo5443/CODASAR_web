@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Definición del juego de caracteres universal para admitir acentos y eñes -->
     <meta charset="UTF-8">
-    <!-- Configuración para que el sitio sea responsivo y se adapte al ancho de cualquier dispositivo móvil -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FeastCatering | Banquetes y Sabores Exquisitos</title>
     
-    <!-- Fuentes de Google: Playfair Display para títulos elegantes y Poppins para lectura cómoda -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Biblioteca externa FontAwesome v6.5.1 (Versión actualizada que incluye soporte nativo para el icono de cazuela) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
@@ -797,6 +793,34 @@
             opacity: 0.7;               /* Opacidad reducida para textos de copyright secundarios */
         }
 
+        /* ==========================================================================
+           NUEVOS ESTILOS AGREGADOS PARA EL BOTÓN FLOTANTE DE WHATSAPP
+           ========================================================================== */
+        .footer-socials a.whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            color: white;
+            font-size: 2rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2500; /* Por encima de las secciones comunes y headers */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .footer-socials a.whatsapp-btn:hover {
+            background-color: #20ba5a;
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
         /* RESPONSIVE DESIGN (Media Queries) */
         
         /* Ajustes para tabletas y computadoras pequeñas (Menor a 992px) */
@@ -867,45 +891,47 @@
             .form-card {
                 padding: 1.8rem;        /* Reduce el margen interno del formulario en pantallas pequeñas */
             }
+
+            /* Ajuste del botón flotante para pantallas pequeñas */
+            .footer-socials a.whatsapp-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.6rem;
+            }
+            
         }
     </style>
 </head>
 <body>
 
-    <!-- CABECERA: Contiene la marca y el menú de navegación superior -->
     <header>
         <nav class="navbar">
-            <!-- Marca/Logo de la empresa de banquetes con el icono de Cazuela/Olla caliente funcionando -->
             <a href="#" class="logo">
-                <i class="fa-solid fa-kitchen-set"></i> <!-- Icono de cazuela con vapor caliente -->
-                CODASAR
+                <i class="fa-solid fa-kitchen-set"></i> CODASAR
             </a>
             
-            <!-- Lista de navegación (Menú) con llamadas a funciones de cierre automático en móviles -->
             <ul class="nav-links" id="navLinks">
                 <li><a href="#inicio" onclick="toggleMenu()">Inicio</a></li>
                 <li><a href="#catalogo" onclick="toggleMenu()">Nuestro Catálogo</a></li>
                 <li><a href="#contacto" onclick="toggleMenu()">Cotizar Evento</a></li>
             </ul>
 
-            <!-- Botón de apertura de menú en móvil (Hamburguesa) -->
             <div class="nav-toggle" id="navToggle" onclick="toggleMenu()">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </nav>
     </header>
 
-    <!-- PORTADA PRINCIPAL (Hero Section) -->
     <section id="inicio" class="hero">
         <div class="hero-content">
             <h1>Sabores Exquisitos que Crean Recuerdos Inolvidables</h1>
             <p>Especialistas en catering, bufés y banquetes de alta gama para bodas, quince años, corporativos y celebraciones íntimas.</p>
-            <!-- Botón de anclaje que baja directo a la sección de Catálogo -->
             <a href="#catalogo" class="btn-primary">Explorar Catálogo <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </section>
 
-    <!-- SECCIÓN DE CATÁLOGO: Contiene filtros dinámicos y la cuadrícula de productos -->
     <section id="catalogo" class="catalog-section">
         <div class="section-container">
             <div class="section-header">
@@ -913,7 +939,6 @@
                 <p class="subtitle">Encuentra la alternativa perfecta para deleitar a tus comensales</p>
             </div>
 
-            <!-- Botones de Filtro Dinámico por Categorías (Controlados por JavaScript mediante "data-filter") -->
             <div class="filter-container">
                 <button class="btn-filter active" data-filter="todos">Todos los Servicios</button>
                 <button class="btn-filter" data-filter="banquete">Banquetes Formales</button>
@@ -921,10 +946,8 @@
                 <button class="btn-filter" data-filter="snack">Barra de Snacks</button>
             </div>
 
-            <!-- Cuadrícula (Grid) donde se renderizan las tarjetas de menús -->
             <div class="catalog-grid" id="catalogGrid">
                 
-                <!-- Tarjeta 1: Banquete Gourmet (Categoría: banquete) -->
                 <div class="card" data-category="banquete">
                     <div class="card-img-wrapper">
                         <img class="card-img" src="https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=600" alt="Banquete de Gala 3 Tiempos">
@@ -932,16 +955,14 @@
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">Banquete de Gala 3 Tiempos</h3>
-                        <p class="card-description">Una experiencia gastronómica de alta cocina. Incluye una elegante entrada fría o caliente, un plato fuerte gourmet y postres finos.</p>
+                        <p class="card-description">Una experiencia gastronomía de alta cocina. Incluye una elegante entrada fría o caliente, un plato fuerte gourmet y postres finos.</p>
                         <div class="card-footer">
                             <div class="card-price">$280 <span>/ Persona</span></div>
-                            <!-- Disparador para abrir modal pasando la clave del menú 'banquete3t' -->
                             <button class="btn-card" onclick="openDetailsModal('banquete3t')">Detalles <i class="fa-solid fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tarjeta 2: Buffet Internacional (Categoría: banquete) -->
                 <div class="card" data-category="banquete">
                     <div class="card-img-wrapper">
                         <img class="card-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600" alt="Buffet Internacional">
@@ -957,7 +978,6 @@
                     </div>
                 </div>
 
-                <!-- Tarjeta 3: Taquiza Gourmet (Categoría: taquiza) -->
                 <div class="card" data-category="taquiza">
                     <div class="card-img-wrapper">
                         <img class="card-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=600" alt="Taquiza Tradicional Mexicana">
@@ -973,7 +993,6 @@
                     </div>
                 </div>
 
-                <!-- Tarjeta 4: Taquiza al Pastor (Categoría: taquiza) -->
                 <div class="card" data-category="taquiza">
                     <div class="card-img-wrapper">
                         <img class="card-img" src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?q=80&w=600" alt="Trompo al Pastor para Eventos">
@@ -988,7 +1007,6 @@
                     </div>
                 </div>
 
-                <!-- Tarjeta 5: Barra de Snacks (Categoría: snack) -->
                 <div class="card" data-category="snack">
                     <div class="card-img-wrapper">
                         <img class="card-img" src="https://images.unsplash.com/photo-1534080391025-a7f0e6de8023?q=80&w=600" alt="Barra de Snacks Infantiles">
@@ -1004,7 +1022,6 @@
                     </div>
                 </div>
 
-                <!-- Tarjeta 6: Sweet & Salty Candy Bar (Categoría: snack) -->
                 <div class="card" data-category="snack">
                     <div class="card-img-wrapper">
                         <img class="card-img" src="https://images.unsplash.com/photo-1530610476181-d83430964cbb?q=80&w=600" alt="Mesa de Dulces Elegante">
@@ -1023,87 +1040,69 @@
         </div>
     </section>
 
-    <!-- VENTANA MODAL (Oculta por defecto, alimentada dinámicamente por JavaScript al consultar "Detalles") -->
     <div class="modal" id="detailsModal">
         <div class="modal-content">
-            <!-- Botón de esquina para cerrar -->
             <button class="modal-close" onclick="closeDetailsModal()"><i class="fa-solid fa-xmark"></i></button>
-            <!-- Imagen ilustrativa en la cabecera del modal -->
             <img class="modal-header-img" id="modalImage" src="" alt="Detalle del Menu">
             <div class="modal-body">
-                <!-- Fila de Título y Costo del Paquete -->
                 <div class="modal-title-group">
                     <h3 class="modal-title" id="modalTitle">Título del Menú</h3>
                     <span class="modal-price" id="modalPrice">$0 / Persona</span>
                 </div>
-                <!-- Resumen completo -->
                 <p class="modal-description" id="modalDescription">Descripción extendida.</p>
                 
-                <!-- Lista de Inclusiones del Servicio -->
                 <h4 class="modal-section-title">¿Qué incluye este menú?</h4>
                 <ul class="dish-list" id="modalInclusions">
-                    <!-- Los elementos (puntos de lista) se inyectan directamente usando JavaScript -->
-                </ul>
+                    </ul>
 
-                <!-- Enlace de acción rápida que lleva al usuario al cotizador -->
                 <button class="btn-modal-action" onclick="scrollToQuotation()">Elegir este menú para cotizar</button>
             </div>
         </div>
     </div>
 
-    <!-- SECCIÓN DE CONTACTO Y COTIZADOR AUTOMÁTICO -->
     <section id="contacto" class="contact-section">
         <div class="contact-grid-container">
             
-            <!-- Columna Izquierda: Información corporativa de contacto -->
             <div class="contact-info">
                 <h2>Planifiquemos un Banquete de Éxito</h2>
                 <p>Nuestros expertos están listos para asistirte. Haz un estimado del costo usando nuestra calculadora interactiva rápida y asegura la fecha.</p>
                 
-                <!-- Bloques independientes de datos de contacto rápidos -->
                 <div class="info-cards">
-                    <!-- Teléfono -->
                     <div class="info-card">
                         <div class="info-card-icon"><i class="fa-solid fa-phone"></i></div>
                         <div class="info-card-text">
                             <h4>Teléfono / WhatsApp</h4>
-                            <p>+52 (55) 1234-5678</p>
+                            <p>+52 (55) 8122 0366</p>
                         </div>
                     </div>
 
-                    <!-- Correo -->
                     <div class="info-card">
                         <div class="info-card-icon"><i class="fa-solid fa-envelope"></i></div>
                         <div class="info-card-text">
                             <h4>Correo Electrónico</h4>
-                            <p>eventos@feastcatering.com</p>
+                            <p>eventos_codasar@gmail.com</p>
                         </div>
                     </div>
 
-                    <!-- Dirección física -->
                     <div class="info-card">
                         <div class="info-card-icon"><i class="fa-solid fa-location-dot"></i></div>
                         <div class="info-card-text">
                             <h4>Dirección Principal</h4>
-                            <p>Av. de los Gastrónomos 402, Naucalpan, EdoMex</p>
+                            <p>Querétaro, Qro.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Columna Derecha: Tarjeta de Cotizador Integrado -->
             <div class="form-card">
                 <h3 class="form-title">Calcula tu Presupuesto</h3>
                 
-                <!-- Formulario conectado a la función JavaScript handleFormSubmit -->
                 <form id="quoteForm" onsubmit="handleFormSubmit(event)">
-                    <!-- Entrada de Nombre completo -->
                     <div class="form-group">
                         <label for="guestName">Nombre Completo:</label>
                         <input type="text" id="guestName" placeholder="Ej. Juan Pérez" required>
                     </div>
 
-                    <!-- Fila doble para Fecha del Evento y Correo de contacto -->
                     <div class="form-row">
                         <div class="form-group">
                             <label for="eventDate">Fecha del Evento:</label>
@@ -1115,11 +1114,9 @@
                         </div>
                     </div>
 
-                    <!-- Fila doble para Seleccionar el Paquete y la Cantidad de personas -->
                     <div class="form-row">
                         <div class="form-group">
                             <label for="packageSelect">Menú Deseado:</label>
-                            <!-- Escucha cambios (onchange) para recalcular el presupuesto inmediatamente -->
                             <select id="packageSelect" onchange="calculatePrice()">
                                 <option value="banquete3t" data-price="280">Banquete Gala 3 Tiempos ($280)</option>
                                 <option value="buffetInt" data-price="220">Gran Buffet Internacional ($220)</option>
@@ -1131,22 +1128,18 @@
                         </div>
                         <div class="form-group">
                             <label for="guestCount">Número de Invitados:</label>
-                            <!-- Escucha pulsaciones (oninput) para actualizar el presupuesto a medida que escribes -->
                             <input type="number" id="guestCount" value="50" min="20" max="1000" oninput="calculatePrice()" required>
                         </div>
                     </div>
 
-                    <!-- Tarjeta interior de cálculo dinámico -->
                     <div class="calculator-preview">
                         <div>
                             <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">PRESUPUESTO ESTIMADO</span>
                             <div style="font-size: 0.9rem; font-weight: 300;">*Precio estimado antes de montaje especial</div>
                         </div>
-                        <!-- Valor total inyectado dinámicamente por la función calculatePrice -->
                         <div class="calc-total" id="estimatedTotal">$14,000</div>
                     </div>
 
-                    <!-- Botón de envío que simula el guardado de datos -->
                     <button type="submit" class="btn-submit">Enviar Solicitud de Reserva</button>
                 </form>
             </div>
@@ -1154,29 +1147,29 @@
         </div>
     </section>
 
-    <!-- PIE DE PÁGINA (Footer) -->
     <footer>
-        <h3>FeastCatering</h3>
+        <h3>CODASAR </h3>
         <p>Expertos en gastronomía y logística para que seas el mejor anfitrión.</p>
-        <!-- Redes sociales informativas -->
         <div class="footer-socials">
             <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
             <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://wa.me/525581220366?text=Hola!%20Me%20gustaría%20recibir%20información" 
+                     target="_blank" 
+                     rel="noopener noreferrer" 
+                    class="whatsapp-btn"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
-        <p>© 2026 FeastCatering S.A. de C.V. Todos los derechos reservados.</p>
+        <p>© 2026 CODASAR S.A. de C.V. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- TOAST DE CONFIRMACIÓN: Mensaje que se levanta por el fondo de la pantalla al enviar el formulario -->
     <div id="successToast" class="toast">
         <i class="fa-solid fa-circle-check"></i>
         <span>¡Presupuesto Guardado! Te contactaremos por email en unos minutos.</span>
     </div>
 
-    <!-- JAVASCRIPT: Controla filtros de tarjetas, despliegues de modales, el menú responsivo móvil y los cálculos -->
     <script>
         // DICCIONARIO DE DATOS (Base de datos local simulada en un objeto JSON)
         // Almacena la información extendida que se inyectará en la ventana emergente al dar clic en "Detalles"
+        //
         const menuDetails = {
             banquete3t: {
                 title: "Banquete de Gala 3 Tiempos",
